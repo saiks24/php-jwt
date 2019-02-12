@@ -1,0 +1,26 @@
+{
+  "name": "Saiks24/php-jwt",
+  "description": "Library to work with JWT Tokens (encode|decode|read-write to storage)",
+  "homepage": "https://github.com/saiks24/php-jwt",
+  "authors": [
+    {
+      "name": "Saiks24",
+      "email": "saiks1337@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "license": "Apache-2",
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Saiks24\\JWT\\": "src",
+      "Saiks24\\JWT\\Storage\\": "src/Storage",
+      "Saiks24\\JWT\\Exceptions\\": "src/Exceptions"
+    }
+  },
+  "require-dev": {
+    "phpunit/phpunit": " 4.8.35"
+  }
+}
