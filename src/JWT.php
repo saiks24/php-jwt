@@ -3,6 +3,7 @@ namespace Saiks24\JWT;
 
 use Saiks24\JWT\Exceptions\JWTWrongFormat;
 use Saiks24\JWT\Exceptions\MissingConfiguration;
+use Saiks24\JWT\Storage\Persisted;
 
 class JWT
 {
@@ -14,6 +15,8 @@ class JWT
     private $signature;
     /** @var boolean  */
     private $isValid;
+    /** @var Persisted */
+    public $storage;
 
     /**
      * JWT constructor.
@@ -61,6 +64,11 @@ class JWT
         }
         $ourSignature = hash_hmac('sha256',$header.'.'.$payload,$privateKey,false);
         return $ourSignature === $signature;
+    }
+
+    public function setStorageStrategy(Persisted $storage)
+    {
+        $this->storage = $storage;
     }
 
     /**
