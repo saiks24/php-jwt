@@ -15,4 +15,16 @@ $signature = hash_hmac('sha256',$header.'.'.$payload,'testSecret',false);
 $jwt  =  $header . '.' . $payload . '.' . $signature;
 var_dump($jwt);
 $jwtObject = \Saiks24\JWT\JWT::create($jwt);
-var_dump($jwtObject->isValid());
+$jwtObject->setStorageStrategy(new \Saiks24\JWT\Storage\RedisStorage());
+$i = 0;
+$redis = new \Saiks24\JWT\Storage\RedisStorage();
+while (true) {
+    $jwtObject = \Saiks24\JWT\JWT::create($jwt);
+    $jwtObject->setStorageStrategy($redis);
+    var_dump($i);
+    if($i == 50000) {
+        break;
+    }
+    $jwtObject->add($i,$jwtObject);
+    $i++;
+}

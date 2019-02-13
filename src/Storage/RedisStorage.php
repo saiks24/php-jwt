@@ -13,20 +13,33 @@ use Saiks24\JWT\JWT;
 
 class RedisStorage implements Persisted
 {
+    /** @var \Redis */
+    private $redisConnect;
+    /**
+     * RedisStorage constructor.
+     */
+    public function __construct()
+    {
+        $redisConnect = new \Redis();
+        $redisConnect->connect('0.0.0.0');
+        $this->redisConnect = $redisConnect;
+    }
 
     public function get($id): JWT
     {
-        // TODO: Implement get() method.
+        $jwtString = $this->redisConnect->hGet('jwt:usersjwt',$id);
+        $jwt = JWT::create($jwtString);
+        return $jwt;
     }
 
-    public function add(JWT $jwt): bool
+    public function add($id , JWT $jwt): bool
     {
-        // TODO: Implement add() method.
+        return (bool)$this->redisConnect->hSet('jwt:usersjwt',$id,$jwt->__toString());
     }
 
-    public function remove(JWT $jwt): bool
+    public function remove($id): bool
     {
-        // TODO: Implement remove() method.
+        return (bool)$this->redisConnect->hDel('jwt:usersjwt',$id);
     }
 
 }

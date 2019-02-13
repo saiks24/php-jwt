@@ -84,15 +84,19 @@ class JWT implements Persisted
         return $this->storage->get($id);
     }
 
-    public function add(JWT $jwt): bool
+    public function add($id, JWT $jwt): bool
     {
-        return $this->storage->add($this);
+        return $this->storage->add($id,$jwt);
     }
 
-    public function remove(JWT $jwt): bool
+    public function remove($id): bool
     {
         return $this->storage->remove($this);
     }
 
+    public function __toString()
+    {
+        return $this->header.'.'.$this->payload.'.'.$this->signature;
+    }
 
 }

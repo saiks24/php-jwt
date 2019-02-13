@@ -6,6 +6,6 @@ use Saiks24\JWT\JWT;
 interface Persisted
 {
     public function get($id) : JWT;
-    public function add(JWT $jwt) : bool;
-    public function remove(JWT $jwt) : bool;
+    public function add($id , JWT $jwt) : bool;
+    public function remove($id) : bool;
 }
