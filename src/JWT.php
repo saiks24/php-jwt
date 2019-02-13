@@ -5,7 +5,7 @@ use Saiks24\JWT\Exceptions\JWTWrongFormat;
 use Saiks24\JWT\Exceptions\MissingConfiguration;
 use Saiks24\JWT\Storage\Persisted;
 
-class JWT
+class JWT implements Persisted
 {
     /** @var string  */
     private $header;
@@ -78,5 +78,21 @@ class JWT
     {
         return $this->isValid;
     }
+
+    public function get($id): JWT
+    {
+        return $this->storage->get($id);
+    }
+
+    public function add(JWT $jwt): bool
+    {
+        return $this->storage->add($this);
+    }
+
+    public function remove(JWT $jwt): bool
+    {
+        return $this->storage->remove($this);
+    }
+
 
 }
