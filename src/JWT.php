@@ -51,7 +51,7 @@ class JWT implements Persisted
 
     public function isOld()
     {
-        return time() > $this->payload['invalidate'];
+        return time() > $this->payload['exp'];
     }
 
     /** Verify JWT Token
