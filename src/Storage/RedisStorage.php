@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: mikhail
- * Date: 13.02.19
- * Time: 12:58
- */
 
 namespace Saiks24\JWT\Storage;
 
@@ -15,13 +9,22 @@ class RedisStorage implements Persisted
 {
     /** @var \Redis */
     private $redisConnect;
+
     /**
      * RedisStorage constructor.
+     *
+     * @param array $config
+     * [
+     *      'address' => 'address of redis server'
+     *      'port' => 'port of redis server'
+     *      'user' => 'user for redis server'
+     *      'password' => 'password to login'
+     * ]
      */
-    public function __construct()
+    public function __construct(array $config)
     {
         $redisConnect = new \Redis();
-        $redisConnect->connect('0.0.0.0');
+        $redisConnect->connect($config['address']);
         $this->redisConnect = $redisConnect;
     }
 

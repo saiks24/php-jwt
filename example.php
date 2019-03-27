@@ -17,7 +17,9 @@ var_dump($jwt);
 $jwtObject = \Saiks24\JWT\JWT::create($jwt);
 $jwtObject->setStorageStrategy(new \Saiks24\JWT\Storage\RedisStorage());
 $i = 0;
-$redis = new \Saiks24\JWT\Storage\RedisStorage();
+$redis = new \Saiks24\JWT\Storage\RedisStorage([
+  'address' => '0.0.0.0'
+]);
 while (true) {
     $jwtObject = \Saiks24\JWT\JWT::create($jwt);
     $jwtObject->setStorageStrategy($redis);

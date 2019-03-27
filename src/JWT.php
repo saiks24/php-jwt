@@ -33,7 +33,7 @@ class JWT implements Persisted
         $this->isValid = $isValid;
     }
 
-    /**
+    /** Create instance of class Saiks24\JWT
      * @param String $data
      * @return JWT
      * @throws JWTWrongFormat
@@ -49,7 +49,7 @@ class JWT implements Persisted
         return new JWT($header,$payload,$signature,$isValid);
     }
 
-    /**
+    /** Verify JWT Token
      * @param $header
      * @param $payload
      * @param $signature
@@ -79,21 +79,40 @@ class JWT implements Persisted
         return $this->isValid;
     }
 
+    /**
+     * @param $id
+     *
+     * @return \Saiks24\JWT\JWT
+     */
     public function get($id): JWT
     {
         return $this->storage->get($id);
     }
 
+    /**
+     * @param                  $id
+     * @param \Saiks24\JWT\JWT $jwt
+     *
+     * @return bool
+     */
     public function add($id, JWT $jwt): bool
     {
         return $this->storage->add($id,$jwt);
     }
 
+    /**
+     * @param $id
+     *
+     * @return bool
+     */
     public function remove($id): bool
     {
         return $this->storage->remove($this);
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->header.'.'.$this->payload.'.'.$this->signature;
