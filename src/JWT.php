@@ -4,12 +4,12 @@ namespace Saiks24\JWT;
 use Saiks24\JWT\Exceptions\JWTWrongFormat;
 use Saiks24\JWT\Exceptions\MissingConfiguration;
 use Saiks24\JWT\Storage\Persisted;
-
+// TODO Распилить на отдельные классы для access и refresh токенов
 class JWT implements Persisted
 {
-    /** @var string  */
+    /** @var array  */
     private $header;
-    /** @var string  */
+    /** @var array  */
     private $payload;
     /** @var string  */
     private $signature;
@@ -46,7 +46,12 @@ class JWT implements Persisted
             throw new JWTWrongFormat('Not valid JWT format');
         }
         $isValid = self::verify($header,$payload,$signature);
-        return new JWT($header,$payload,$signature,$isValid);
+        return new JWT(base64_decode($header),base64_decode($payload),base64_decode($signature),base64_decode($isValid));
+    }
+
+    public function isOld()
+    {
+        return time() > $this->payload['invalidate'];
     }
 
     /** Verify JWT Token
@@ -118,4 +123,27 @@ class JWT implements Persisted
         return $this->header.'.'.$this->payload.'.'.$this->signature;
     }
 
+    /**
+     * @return string
+     */
+    public function getHeader(): string
+    {
+        return $this->header;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPayload(): string
+    {
+        return $this->payload;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignature(): string
+    {
+        return $this->signature;
+    }
 }
